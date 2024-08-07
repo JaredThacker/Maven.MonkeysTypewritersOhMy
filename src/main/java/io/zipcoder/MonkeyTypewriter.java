@@ -24,9 +24,31 @@ public class MonkeyTypewriter {
         // For each Copier(one safe and one unsafe), create and start 5 monkeys copying the introduction to
         // A Tale Of Two Cities.
 
+        UnsafeCopier unsafeCopier1 = new UnsafeCopier(introduction);
+        unsafeCopier1.run();
+        UnsafeCopier unsafeCopier2 = new UnsafeCopier(introduction);
+        unsafeCopier2.run();
+        UnsafeCopier unsafeCopier3 = new UnsafeCopier(introduction);
+        unsafeCopier3.run();
+        UnsafeCopier unsafeCopier4 = new UnsafeCopier(introduction);
+        unsafeCopier4.run();
+        UnsafeCopier unsafeCopier5 = new UnsafeCopier(introduction);
+        unsafeCopier5.run();
+
+        SafeCopier safeCopier1 = new SafeCopier(introduction);
+        safeCopier1.run();
+        SafeCopier safeCopier2 = new SafeCopier(introduction);
+        safeCopier2.run();
+        SafeCopier safeCopier3 = new SafeCopier(introduction);
+        safeCopier3.run();
+        SafeCopier safeCopier4 = new SafeCopier(introduction);
+        safeCopier4.run();
+        SafeCopier safeCopier5 = new SafeCopier(introduction);
+        safeCopier5.run();
 
         // This wait is here because main is still a thread and we want the main method to print the finished copies
         // after enough time has passed.
+
         try {
             Thread.sleep(1000);
         } catch(InterruptedException e) {
@@ -34,5 +56,16 @@ public class MonkeyTypewriter {
         }
 
         // Print out the copied versions here.
+        System.out.println(unsafeCopier1.copied);
+        System.out.println(unsafeCopier2.copied);
+        System.out.println(unsafeCopier3.copied);
+        System.out.println(unsafeCopier4.copied);
+        System.out.println(unsafeCopier5.copied);
+
+        System.out.println(safeCopier1.copied);
+        System.out.println(safeCopier2.copied);
+        System.out.println(safeCopier3.copied);
+        System.out.println(safeCopier4.copied);
+        System.out.println(safeCopier5.copied);
     }
 }

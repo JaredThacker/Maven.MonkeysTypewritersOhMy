@@ -9,6 +9,11 @@ public class UnsafeCopier extends Copier {
         super(toCopy);
     }
 
+    @Override
     public void run() {
+        while (stringIterator.hasNext()){
+            String nextWord = stringIterator.next();
+            copied += nextWord + " ";
+        }
     }
 }
