@@ -53,28 +53,28 @@ public class MonkeyTypewriter {
         }
 
 
-//        System.out.println("\n\n\nSAFE PRINTING\n\n\n");
-//
-//        ReentrantLock threadLock = new ReentrantLock();
-//        SafeCopier safeCopier = new SafeCopier(introduction, threadLock);
-//
-//        int NUM_MONKEYS = 5;
-//        ArrayList<Thread> monkeyThreads = new ArrayList<>();
-//        for (int i = 0; i < NUM_MONKEYS; i++) {
-//            Thread monkeyThread = new Thread(safeCopier);
-//            monkeyThreads.add(monkeyThread);
-//            monkeyThread.start();
-//        }
-//
-//        for (int i = 0; i < NUM_MONKEYS; i++) {
-//            try {
-//                monkeyThreads.get(i).join();
-//            } catch (InterruptedException exception) {
-//                System.out.printf("Thread %d exception", i);
-//            }
-//        }
-//
-//        System.out.println(safeCopier.copied);
+        System.out.println("\n\n\nSAFE PRINTING\n\n\n");
+
+        ReentrantLock threadLock = new ReentrantLock();
+        SafeCopier safeCopier = new SafeCopier(introduction, threadLock);
+
+        int NUM_MONKEYS = 5;
+        ArrayList<Thread> monkeyThreads = new ArrayList<>();
+        for (int i = 0; i < NUM_MONKEYS; i++) {
+            Thread monkeyThread = new Thread(safeCopier);
+            monkeyThreads.add(monkeyThread);
+            monkeyThread.start();
+        }
+
+        for (int i = 0; i < NUM_MONKEYS; i++) {
+            try {
+                monkeyThreads.get(i).join();
+            } catch (InterruptedException exception) {
+                System.out.printf("Thread %d exception", i);
+            }
+        }
+
+        System.out.println(safeCopier.copied);
 
     }
 }
