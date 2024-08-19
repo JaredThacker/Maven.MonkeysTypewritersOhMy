@@ -42,7 +42,7 @@ public class MonkeyTypewriter {
             }
         }
 
-//        System.out.println(unsafeCopier.copied);
+        System.out.println(unsafeCopier.copied);
 
         // INTERMISSION
 
