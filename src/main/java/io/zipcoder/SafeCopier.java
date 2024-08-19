@@ -7,15 +7,29 @@ import java.util.concurrent.locks.ReentrantLock;
  * correctly every time.  Make the run method thread safe.
  */
 public class SafeCopier extends Copier {
-    public SafeCopier(String toCopy) {
+
+    ReentrantLock reentrantLock;
+
+    public SafeCopier(String toCopy, ReentrantLock lock) {
         super(toCopy);
+        this.reentrantLock = lock;
     }
+
 
     @Override
     public void run() {
-            while (stringIterator.hasNext()){
-                String nextWord = stringIterator.next();
-                copied += nextWord + " ";
+        if (!this.reentrantLock.isLocked()) {
+            this.reentrantLock.lock();
+            try {
+                while (stringIterator.hasNext()) {
+                    String nextWord = stringIterator.next();
+                    copied += nextWord + " ";
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                reentrantLock.unlock();
             }
         }
     }
+}

@@ -13,7 +13,8 @@ public class UnsafeCopier extends Copier {
     public void run() {
         while (stringIterator.hasNext()){
             String nextWord = stringIterator.next();
-            copied += nextWord + " ";
+            super.copied += nextWord + " ";
+//            System.out.printf("Index = %s\n", nextWord);
         }
     }
 }

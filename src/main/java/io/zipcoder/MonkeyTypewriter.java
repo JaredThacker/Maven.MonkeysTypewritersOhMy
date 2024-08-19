@@ -1,5 +1,9 @@
 package io.zipcoder;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class MonkeyTypewriter {
     public static void main(String[] args) {
         String introduction = "It was the best of times,\n" +
@@ -20,34 +24,27 @@ public class MonkeyTypewriter {
                 "its noisiest authorities insisted on its being received, for good or for\n" +
                 "evil, in the superlative degree of comparison only.";
 
-        // Do all of the Monkey / Thread building here
-        // For each Copier(one safe and one unsafe), create and start 5 monkeys copying the introduction to
-        // A Tale Of Two Cities.
+        UnsafeCopier unsafeCopier = new UnsafeCopier(introduction);
 
-        UnsafeCopier unsafeCopier1 = new UnsafeCopier(introduction);
-        unsafeCopier1.run();
-        UnsafeCopier unsafeCopier2 = new UnsafeCopier(introduction);
-        unsafeCopier2.run();
-        UnsafeCopier unsafeCopier3 = new UnsafeCopier(introduction);
-        unsafeCopier3.run();
-        UnsafeCopier unsafeCopier4 = new UnsafeCopier(introduction);
-        unsafeCopier4.run();
-        UnsafeCopier unsafeCopier5 = new UnsafeCopier(introduction);
-        unsafeCopier5.run();
+        int NUM_UNSAFE_MONKEYS = 5;
+        ArrayList<Thread> unsafeMonkeyThreads = new ArrayList<>();
+        for (int i = 0; i < NUM_UNSAFE_MONKEYS; i++) {
+            Thread monkeyThread = new Thread(unsafeCopier);
+            unsafeMonkeyThreads.add(monkeyThread);
+            monkeyThread.start();
+        }
 
-        SafeCopier safeCopier1 = new SafeCopier(introduction);
-        safeCopier1.run();
-        SafeCopier safeCopier2 = new SafeCopier(introduction);
-        safeCopier2.run();
-        SafeCopier safeCopier3 = new SafeCopier(introduction);
-        safeCopier3.run();
-        SafeCopier safeCopier4 = new SafeCopier(introduction);
-        safeCopier4.run();
-        SafeCopier safeCopier5 = new SafeCopier(introduction);
-        safeCopier5.run();
+        for (int i = 0; i < NUM_UNSAFE_MONKEYS; i++) {
+            try {
+                unsafeMonkeyThreads.get(i).join();
+            } catch (Exception e) {
 
-        // This wait is here because main is still a thread and we want the main method to print the finished copies
-        // after enough time has passed.
+            }
+        }
+
+//        System.out.println(unsafeCopier.copied);
+
+        // INTERMISSION
 
         try {
             Thread.sleep(1000);
@@ -55,17 +52,29 @@ public class MonkeyTypewriter {
             System.out.println("MAIN INTERRUPTED");
         }
 
-        // Print out the copied versions here.
-        System.out.println(unsafeCopier1.copied);
-        System.out.println(unsafeCopier2.copied);
-        System.out.println(unsafeCopier3.copied);
-        System.out.println(unsafeCopier4.copied);
-        System.out.println(unsafeCopier5.copied);
 
-        System.out.println(safeCopier1.copied);
-        System.out.println(safeCopier2.copied);
-        System.out.println(safeCopier3.copied);
-        System.out.println(safeCopier4.copied);
-        System.out.println(safeCopier5.copied);
+//        System.out.println("\n\n\nSAFE PRINTING\n\n\n");
+//
+//        ReentrantLock threadLock = new ReentrantLock();
+//        SafeCopier safeCopier = new SafeCopier(introduction, threadLock);
+//
+//        int NUM_MONKEYS = 5;
+//        ArrayList<Thread> monkeyThreads = new ArrayList<>();
+//        for (int i = 0; i < NUM_MONKEYS; i++) {
+//            Thread monkeyThread = new Thread(safeCopier);
+//            monkeyThreads.add(monkeyThread);
+//            monkeyThread.start();
+//        }
+//
+//        for (int i = 0; i < NUM_MONKEYS; i++) {
+//            try {
+//                monkeyThreads.get(i).join();
+//            } catch (InterruptedException exception) {
+//                System.out.printf("Thread %d exception", i);
+//            }
+//        }
+//
+//        System.out.println(safeCopier.copied);
+
     }
 }
